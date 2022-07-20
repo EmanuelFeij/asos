@@ -22,7 +22,7 @@ class Service {
     if (json == null) {
       throw Error();
     }
-    print(json);
+
     return json
         .map((m) => LaunchInfo.fromJson(m as Map<String, dynamic>))
         .toList();

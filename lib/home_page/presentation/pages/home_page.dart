@@ -41,39 +41,15 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // TODO: all width
           const BlackBarTitle(text: "COMPANY"),
           buildCompanyFutureBuilder(),
           const BlackBarTitle(text: "LAUNCHES"),
-          buildLaunchesFutureBuilder()
+          ListBuilder(
+            service: widget.service,
+          ),
         ],
       ),
     );
-  }
-
-  FutureBuilder<List<LaunchInfo>> buildLaunchesFutureBuilder() {
-    return FutureBuilder(
-        future: widget.service.getLaunches(
-            Pagination(limit: 10, offset: 0, sortOrder: SortOrder.asc)),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<LaunchInfo>> snapshot) {
-          if (snapshot.hasData) {
-            print(snapshot.data);
-            var data = snapshot.data != null ? snapshot.data! : [];
-            print(data);
-            return Expanded(
-              child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    print(snapshot.data);
-                    return LaunchInfoWidget(launchInfo: data[index]);
-                  }),
-            );
-          } else if (snapshot.hasError) {
-            print(snapshot.error);
-          }
-          return const Center(child: Text("LOADING"));
-        });
   }
 
   FutureBuilder<CompanyInfo> buildCompanyFutureBuilder() {
@@ -87,6 +63,64 @@ class _HomePageState extends State<HomePage> {
         }
         return const Center(child: Text("LOADING"));
       },
+    );
+  }
+}
+
+class ListBuilder extends StatefulWidget {
+  const ListBuilder({
+    Key? key,
+    required this.service,
+  }) : super(key: key);
+
+  final Service service;
+
+  @override
+  State<ListBuilder> createState() => _ListBuilderState();
+}
+
+class _ListBuilderState extends State<ListBuilder> {
+  var limit = 15;
+  var offset = 0;
+  List<LaunchInfo> launchInfos = [];
+
+  _getMoreData() async {
+    print('getMoreData');
+    final moreData = await widget.service.getLaunches(
+        Pagination(limit: limit, offset: offset, sortOrder: SortOrder.asc));
+    offset += limit;
+    setState(() {
+      launchInfos = [...launchInfos, ...moreData];
+    });
+  }
+
+  @override
+  void initState() {
+    print('Caralho');
+    _getMoreData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('rebuilding lis');
+    return Expanded(
+      child: ListView.builder(
+        itemCount: launchInfos.length,
+        itemBuilder: (context, index) {
+          print('$index  ${launchInfos.length}');
+          if (index < launchInfos.length - 5) {
+            return LaunchInfoWidget(launchInfo: launchInfos[index]);
+          } else {
+            print('foscasse');
+            _getMoreData();
+            return const SizedBox(
+              height: 80,
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+        },
+      ),
     );
   }
 }

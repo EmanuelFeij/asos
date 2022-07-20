@@ -11,7 +11,7 @@ class RepositoryImpl implements Repository {
   @override
   Future<Map<String, dynamic>?> getCompanyInfo() async {
     var url = Uri.https(URL, '/v3/info');
-    print(url);
+
     var response = await http.get(url);
 
     return (response.statusCode == 200)
@@ -23,7 +23,7 @@ class RepositoryImpl implements Repository {
   Future<List<dynamic>?> getLaunches(Pagination p) async {
     var url = Uri.https(
         URL, '/v3/launches', {'limit': '${p.limit}', 'offset': '${p.offset}'});
-    print(url);
+
     var response = await http.get(url);
 
     return (response.statusCode == 200)
