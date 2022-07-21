@@ -9,7 +9,6 @@ class Service {
   Service({required this.repo});
 
   Future<CompanyInfo> getCompanyInfo() async {
-    print("cenas");
     var json = await repo.getCompanyInfo();
     if (json == null) {
       throw Error();

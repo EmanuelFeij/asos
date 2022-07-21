@@ -1,4 +1,5 @@
 class LaunchInfo {
+  final int flightNumber;
   final String missionName;
   final bool upcoming;
   final String launchYear;
@@ -20,18 +21,20 @@ class LaunchInfo {
       this.wikiLink,
       this.youtubeLink,
       this.missionImage,
-      this.launchDateUTC);
+      this.launchDateUTC,
+      this.flightNumber);
 
   // TODO: more date details
   LaunchInfo.fromJson(Map<String, dynamic> json)
-      : missionName = json['mission_name'],
-        upcoming = json['upcoming'],
-        launchYear = json['launch_year'],
-        rocketName = json['rocket']['rocket_name'],
-        rocketType = json['rocket']['rocket_type'],
-        launchSuccess = json['launch_success'],
-        wikiLink = json['links']['wikipedia'],
-        youtubeLink = json['links']['video_link'],
-        launchDateUTC = json['launch_date_utc'],
-        missionImage = json['links']['mission_patch_small'];
+      : missionName = json['mission_name'] ?? '',
+        flightNumber = json['flight_number'],
+        upcoming = json['upcoming'] ?? false,
+        launchYear = json['launch_year'] ?? '',
+        rocketName = json['rocket']['rocket_name'] ?? '',
+        rocketType = json['rocket']['rocket_type'] ?? '',
+        launchSuccess = json['launch_success'] ?? false,
+        wikiLink = json['links']['wikipedia'] ?? '',
+        youtubeLink = json['links']['video_link'] ?? '',
+        launchDateUTC = json['launch_date_utc'] ?? '',
+        missionImage = json['links']['mission_patch_small'] ?? '';
 }

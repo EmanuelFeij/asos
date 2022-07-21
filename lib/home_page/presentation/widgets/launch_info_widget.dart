@@ -7,15 +7,31 @@ class LaunchInfoWidget extends StatelessWidget {
   final LaunchInfo launchInfo;
   @override
   Widget build(BuildContext context) {
+    Widget image;
+    if (launchInfo.missionImage != "") {
+      image = Image.network(launchInfo.missionImage, width: 70, height: 70);
+    } else {
+      image = const SizedBox(
+        width: 70,
+        height: 70,
+        child: Center(
+          child: Text(
+            'Image Not Found',
+            style: TextStyle(overflow: TextOverflow.clip),
+          ),
+        ),
+      );
+    }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         // image
-        Image.network(launchInfo.missionImage, width: 70, height: 70),
+        image,
         // Text
         Expanded(
           child: Column(
             children: [
+              Text('${launchInfo.flightNumber}'),
               Text(launchInfo.missionName),
               Text(launchInfo.launchYear),
               Text('${launchInfo.rocketName}/${launchInfo.rocketType}'),

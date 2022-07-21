@@ -80,47 +80,62 @@ class ListBuilder extends StatefulWidget {
 }
 
 class _ListBuilderState extends State<ListBuilder> {
-  var limit = 15;
+  var limit = 20;
   var offset = 0;
+  bool gettingData = false;
+  bool isItDone = false;
   List<LaunchInfo> launchInfos = [];
 
   _getMoreData() async {
-    print('getMoreData');
+    gettingData = true;
     final moreData = await widget.service.getLaunches(
         Pagination(limit: limit, offset: offset, sortOrder: SortOrder.asc));
+    if (moreData.isEmpty) {
+      isItDone = true;
+      gettingData = false;
+      setState(() {});
+      return;
+    }
     offset += limit;
     setState(() {
       launchInfos = [...launchInfos, ...moreData];
     });
+    gettingData = false;
   }
 
   @override
   void initState() {
-    print('Caralho');
     _getMoreData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilding lis');
     return Expanded(
       child: ListView.builder(
-        itemCount: launchInfos.length,
-        itemBuilder: (context, index) {
-          print('$index  ${launchInfos.length}');
-          if (index < launchInfos.length - 5) {
-            return LaunchInfoWidget(launchInfo: launchInfos[index]);
-          } else {
-            print('foscasse');
-            _getMoreData();
+          itemCount: launchInfos.length,
+          itemBuilder: (context, index) {
+            if (index < launchInfos.length - 5) {
+              return LaunchInfoWidget(launchInfo: launchInfos[index]);
+            } else {
+              if (!gettingData && !isItDone) {
+                _getMoreData();
+              }
+              ;
+            }
+            if (!isItDone) {
+              return const SizedBox(
+                height: 80,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
             return const SizedBox(
               height: 80,
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(
+                child: Text("Done"),
+              ),
             );
-          }
-        },
-      ),
+          }),
     );
   }
 }
