@@ -6,6 +6,7 @@ class LaunchInfo {
   final String rocketName;
   final String rocketType;
   final String missionImage;
+  final String missionImageBig;
   final String launchDateUTC;
   final bool launchSuccess;
   final String wikiLink;
@@ -22,7 +23,8 @@ class LaunchInfo {
       this.youtubeLink,
       this.missionImage,
       this.launchDateUTC,
-      this.flightNumber);
+      this.flightNumber,
+      this.missionImageBig);
 
   // TODO: more date details
   LaunchInfo.fromJson(Map<String, dynamic> json)
@@ -36,5 +38,6 @@ class LaunchInfo {
         wikiLink = json['links']['wikipedia'] ?? '',
         youtubeLink = json['links']['video_link'] ?? '',
         launchDateUTC = json['launch_date_utc'] ?? '',
-        missionImage = json['links']['mission_patch_small'] ?? '';
+        missionImage = json['links']['mission_patch_small'] ?? '',
+        missionImageBig = json['links']['mission_patch'] ?? '';
 }

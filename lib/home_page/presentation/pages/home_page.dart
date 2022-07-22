@@ -115,13 +115,12 @@ class _ListBuilderState extends State<ListBuilder> {
       child: ListView.builder(
           itemCount: launchInfos.length,
           itemBuilder: (context, index) {
-            if (index < launchInfos.length - 5) {
+            if (index < launchInfos.length - 10) {
               return LaunchInfoWidget(launchInfo: launchInfos[index]);
             } else {
               if (!gettingData && !isItDone) {
                 _getMoreData();
               }
-              ;
             }
             if (!isItDone) {
               return const SizedBox(
@@ -129,12 +128,10 @@ class _ListBuilderState extends State<ListBuilder> {
                 child: Center(child: CircularProgressIndicator()),
               );
             }
-            return const SizedBox(
-              height: 80,
-              child: Center(
-                child: Text("Done"),
-              ),
-            );
+            if (isItDone && index < launchInfos.length) {
+              return LaunchInfoWidget(launchInfo: launchInfos[index]);
+            }
+            return const SizedBox();
           }),
     );
   }
