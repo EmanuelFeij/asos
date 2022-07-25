@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spacex/home_page/domain/lauch_info.dart';
 import 'package:spacex/home_page/domain/pagination.dart';
 
 import '../../service/service.dart';
@@ -12,9 +13,14 @@ class States extends InheritedWidget {
 
   final Service service;
   final Widget child;
+  final usersNotifier = ValueNotifier(<LaunchInfo>[]);
   final darkThemeNotifier = ValueNotifier(true);
-  final paginationNotifier =
-      ValueNotifier(Pagination(limit: 20, offset: 0, sortOrder: SortOrder.asc));
+  final paginationNotifier = ValueNotifier(Pagination(
+      limit: 20,
+      offset: 0,
+      sortOrder: SortOrder.asc,
+      launchSuccessful: LaunchSuccessful.both,
+      year: 0));
 
   static States? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<States>();

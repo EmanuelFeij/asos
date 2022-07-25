@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/home_page/domain/pagination.dart';
+import 'package:spacex/home_page/presentation/widgets/state_widget.dart';
 
 class FilterDialogWidget extends StatefulWidget {
   const FilterDialogWidget({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var states = States.of(context)?.paginationNotifier;
     final mQuery = MediaQuery.of(context);
     return Dialog(
       child: SizedBox(
@@ -73,9 +75,15 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
               // asc/desc
               ElevatedButton(
                   onPressed: () {
-                    print(yearTextController);
-                    print(wasSuccessful);
-                    print(sortBy);
+                    states!.value = Pagination(
+                      launchSuccessful: wasSuccessful
+                          ? LaunchSuccessful.yes
+                          : LaunchSuccessful.no,
+                      year: int.parse(yearTextController.text),
+                      limit: 20,
+                      offset: 0,
+                      sortOrder: SortOrder.asc,
+                    );
                     Navigator.of(context).pop();
                   },
                   child: const Text('Close')),

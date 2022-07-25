@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/lauch_info.dart';
-import '../../domain/pagination.dart';
 import '../../service/service.dart';
 import 'launch_info_widget.dart';
 import 'state_widget.dart';
@@ -19,7 +18,6 @@ class ListBuilder extends StatefulWidget {
 }
 
 class _ListBuilderState extends State<ListBuilder> {
-  
   var limit = 20;
   var offset = 0;
   bool gettingData = false;
@@ -29,7 +27,8 @@ class _ListBuilderState extends State<ListBuilder> {
   _getMoreData() async {
     final state = States.of(context)!;
     gettingData = true;
-    final moreData = await widget.service.getLaunches(state.paginationNotifier.value);
+    final moreData =
+        await widget.service.getLaunches(state.paginationNotifier.value);
     if (moreData.isEmpty) {
       isItDone = true;
       gettingData = false;

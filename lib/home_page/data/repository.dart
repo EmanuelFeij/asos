@@ -5,12 +5,12 @@ import 'package:spacex/home_page/domain/pagination.dart';
 
 import '../service/repository.dart';
 
-String URL = "api.spacexdata.com";
+const String urlSpaceX = "api.spacexdata.com";
 
 class RepositoryImpl implements Repository {
   @override
   Future<Map<String, dynamic>?> getCompanyInfo() async {
-    var url = Uri.https(URL, '/v3/info');
+    var url = Uri.https(urlSpaceX, '/v3/info');
 
     var response = await http.get(url);
 
@@ -21,8 +21,8 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<List<dynamic>?> getLaunches(Pagination p) async {
-    var url = Uri.https(
-        URL, '/v3/launches', {'limit': '${p.limit}', 'offset': '${p.offset}'});
+    var url = Uri.https(urlSpaceX, '/v3/launches',
+        {'limit': '${p.limit}', 'offset': '${p.offset}'});
 
     var response = await http.get(url);
 
