@@ -27,7 +27,6 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder(
       valueListenable: state,
       builder: ((context, bool value, child) {
-        print('my app $value');
         var theme = value ? ThemeData.dark() : ThemeData.light();
         return MaterialApp(
           title: 'Flutter Demo',

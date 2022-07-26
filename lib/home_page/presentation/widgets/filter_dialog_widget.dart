@@ -11,7 +11,7 @@ class FilterDialogWidget extends StatefulWidget {
 
 class _FilterDialogWidgetState extends State<FilterDialogWidget> {
   final yearTextController = TextEditingController();
-  var wasSuccessful = false;
+  var wasSuccessful = LaunchSuccessful.both;
   var sortBy = SortOrder.asc;
 
   @override
@@ -20,7 +20,7 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
     final mQuery = MediaQuery.of(context);
     return Dialog(
       child: SizedBox(
-        height: mQuery.size.height * 0.4,
+        height: mQuery.size.height * 0.3,
         width: mQuery.size.width,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -37,52 +37,80 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
               ),
               // sucessfully
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Successful:'),
-                  Checkbox(
+                  const Text("Successful Launch:"),
+                  DropdownButton<LaunchSuccessful>(
                       value: wasSuccessful,
-                      onChanged: (v) {
-                        setState(() {
-                          wasSuccessful = v!;
-                          print(wasSuccessful);
-                        });
+                      items: [
+                        DropdownMenuItem(
+                          value: LaunchSuccessful.both,
+                          child: Text(
+                            LaunchSuccessful.both.toShortString(),
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: LaunchSuccessful.yes,
+                          child: Text(
+                            LaunchSuccessful.yes.toShortString(),
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: LaunchSuccessful.no,
+                          child: Text(
+                            LaunchSuccessful.no.toShortString(),
+                          ),
+                        ),
+                      ],
+                      onChanged: (newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            wasSuccessful = newValue;
+                          });
+                        }
                       }),
                 ],
               ),
-              DropdownButton<String>(
-                  value: sortBy.toString(),
-                  items: [
-                    DropdownMenuItem(
-                        value: SortOrder.asc.toString(),
-                        child: Text(SortOrder.asc.toString())),
-                    DropdownMenuItem(
-                        value: SortOrder.desc.toString(),
-                        child: Text(SortOrder.desc.toString())),
-                  ],
-                  onChanged: (newValue) {
-                    if (newValue != null) {
-                      SortOrder s;
-                      if (newValue == SortOrder.asc.toString()) {
-                        s = SortOrder.asc;
-                      } else {
-                        s = SortOrder.desc;
-                      }
-                      setState(() {
-                        sortBy = s;
-                      });
-                    }
-                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Sorted By:"),
+                  DropdownButton<SortOrder>(
+                      value: sortBy,
+                      items: [
+                        DropdownMenuItem(
+                            value: SortOrder.asc,
+                            child: Text(SortOrder.asc.toShortString())),
+                        DropdownMenuItem(
+                            value: SortOrder.desc,
+                            child: Text(SortOrder.desc.toShortString())),
+                      ],
+                      onChanged: (newValue) {
+                        if (newValue != null) {
+                          SortOrder s;
+                          if (newValue == SortOrder.asc) {
+                            s = SortOrder.asc;
+                          } else {
+                            s = SortOrder.desc;
+                          }
+                          setState(() {
+                            sortBy = s;
+                          });
+                        }
+                      }),
+                ],
+              ),
               // asc/desc
               ElevatedButton(
                   onPressed: () {
                     states!.value = Pagination(
-                      launchSuccessful: wasSuccessful
-                          ? LaunchSuccessful.yes
-                          : LaunchSuccessful.no,
-                      year: int.parse(yearTextController.text),
+                      launchSuccessful: wasSuccessful,
+                      year: yearTextController.text.isEmpty
+                          ? 0
+                          : int.parse(yearTextController.text),
                       limit: 20,
                       offset: 0,
-                      sortOrder: SortOrder.asc,
+                      sortOrder: sortBy,
                     );
                     Navigator.of(context).pop();
                   },

@@ -21,9 +21,17 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<List<dynamic>?> getLaunches(Pagination p) async {
-    var url = Uri.https(urlSpaceX, '/v3/launches',
-        {'limit': '${p.limit}', 'offset': '${p.offset}'});
-
+    var args = {'limit': '${p.limit}', 'offset': '${p.offset}'};
+    args['order'] = p.sortOrder == SortOrder.desc ? 'desc' : 'asc';
+    if (p.launchSuccessful != LaunchSuccessful.both) {
+      args['launch_success'] =
+          p.launchSuccessful == LaunchSuccessful.yes ? 'true' : 'false';
+    }
+    if (p.year != 0) {
+      args['launch_year'] = p.year.toString();
+    }
+    var url = Uri.https(urlSpaceX, '/v3/launches', args);
+    print(url);
     var response = await http.get(url);
 
     return (response.statusCode == 200)

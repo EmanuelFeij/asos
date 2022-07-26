@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spacex/home_page/domain/company_info.dart';
 
 import '../../service/service.dart';
-import '../widgets/list_builder.dart';
 import '../widgets/black_bar_widget.dart';
 import '../widgets/company_info_widget.dart';
 import '../widgets/filter_dialog_widget.dart';
+import '../widgets/list_builder.dart';
 import '../widgets/state_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             leading: GestureDetector(
               onTap: () {
-                print(value);
                 if (value == true) {
                   state.darkThemeNotifier.value = false;
                 } else {

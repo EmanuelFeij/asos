@@ -15,4 +15,16 @@ class Pagination {
 
 enum SortOrder { asc, desc }
 
+extension SortOrderString on SortOrder {
+  String toShortString() {
+    return toString().split('.').last.toUpperCase();
+  }
+}
+
 enum LaunchSuccessful { yes, no, both }
+
+extension LaunchSuccessfulString on LaunchSuccessful {
+  String toShortString() {
+    return toString().split('.').last.toUpperCase();
+  }
+}
