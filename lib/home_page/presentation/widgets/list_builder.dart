@@ -28,7 +28,6 @@ class _ListBuilderState extends State<ListBuilder> {
       isItDone = false;
       return;
     }
-    print("here");
     gettingData = true;
     final moreData =
         await widget.service.getLaunches(states.paginationNotifier.value);
@@ -55,7 +54,6 @@ class _ListBuilderState extends State<ListBuilder> {
 
   @override
   void didChangeDependencies() {
-    print("didChangeDependencies");
     super.didChangeDependencies();
     final state = States.of(context)!;
     state.paginationNotifier.addListener(() {
@@ -109,9 +107,9 @@ class _ListBuilderState extends State<ListBuilder> {
                                         mode: LaunchMode.externalApplication,
                                       );
                                     },
-                                    // TODO: add to assets.
-                                    child: Image.network(
-                                      'https://1000logos.net/wp-content/uploads/2017/05/New-YouTube-logo.jpg',
+                                    child: const Image(
+                                      image:
+                                          AssetImage('assets/youtube_logo.jpg'),
                                       width: 75,
                                       height: 75,
                                     ),
@@ -124,9 +122,9 @@ class _ListBuilderState extends State<ListBuilder> {
                                         mode: LaunchMode.externalApplication,
                                       );
                                     },
-                                    // TODO: add to assets.
-                                    child: Image.network(
-                                      'https://cdn.freebiesupply.com/images/large/2x/wikipedia-logo-transparent.png',
+                                    child: const Image(
+                                      image: AssetImage(
+                                          "assets/wikipedia_logo.png"),
                                       width: 75,
                                       height: 75,
                                     ),
