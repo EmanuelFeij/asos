@@ -32,7 +32,6 @@ class _ListBuilderState extends State<ListBuilder> {
 
     if (isItDone && states.paginationNotifier.value.offset != 0) {
       isItDone = false;
-      return;
     }
     gettingData = true;
     final moreData =
@@ -43,6 +42,7 @@ class _ListBuilderState extends State<ListBuilder> {
         states.usersNotifier.value = <LaunchInfo>[];
       }
       isItDone = true;
+      gettingData = false;
       return;
     }
     if (states.paginationNotifier.value.offset == 0) {
@@ -82,9 +82,8 @@ class _ListBuilderState extends State<ListBuilder> {
 
   void _scrollToTop() {
     print("scrool me");
-    _scrollController
-      ..animateTo(0,
-          duration: const Duration(seconds: 1), curve: Curves.linear);
+    _scrollController.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.linear);
   }
 
   @override
@@ -105,7 +104,12 @@ class _ListBuilderState extends State<ListBuilder> {
                   controller: _scrollController,
                   itemCount: launchInfos.length,
                   itemBuilder: (context, index) {
-                    if (index == launchInfos.length - 10 && !gettingData) {
+                    print(
+                        '$index, ${launchInfos.length}, $gettingData, $isItDone, ${state.paginationNotifier.value.offset}');
+                    if (index == launchInfos.length - 5 &&
+                        !gettingData &&
+                        !isItDone) {
+                      print("asking more shit");
                       var pagination = state.paginationNotifier.value;
                       state.paginationNotifier.value = Pagination(
                         sortOrder: pagination.sortOrder,
@@ -166,12 +170,11 @@ class _ListBuilderState extends State<ListBuilder> {
                         child: Container(
                           margin: const EdgeInsets.all(16),
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              border: Border.all(),
+                          decoration: const BoxDecoration(
+                              color: Color(0xFF5B6400),
                               shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.elliptical(10, 10))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.elliptical(10, 10))),
                           child:
                               LaunchInfoWidget(launchInfo: launchInfos[index]),
                         ));

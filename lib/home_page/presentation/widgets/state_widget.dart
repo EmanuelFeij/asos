@@ -28,12 +28,13 @@ class States extends InheritedWidget {
 
   @override
   bool updateShouldNotify(States oldWidget) {
-    return darkThemeNotifier.value != oldWidget.darkThemeNotifier.value ||
+    return (darkThemeNotifier.value != oldWidget.darkThemeNotifier.value) ||
         (paginationNotifier.value.limit !=
                 oldWidget.paginationNotifier.value.limit ||
             paginationNotifier.value.offset !=
                 oldWidget.paginationNotifier.value.offset ||
             paginationNotifier.value.sortOrder !=
-                oldWidget.paginationNotifier.value.sortOrder);
+                oldWidget.paginationNotifier.value.sortOrder) ||
+        usersNotifier.value != oldWidget.usersNotifier.value;
   }
 }
