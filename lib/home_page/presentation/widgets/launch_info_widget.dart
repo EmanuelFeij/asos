@@ -9,11 +9,11 @@ class LaunchInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget image;
     if (launchInfo.missionImage != "") {
-      image = Image.network(launchInfo.missionImage, width: 70, height: 70);
+      image = Image.network(launchInfo.missionImage, width: 60, height: 60);
     } else {
       image = const SizedBox(
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
         child: Center(
           child: Text(
             'Image Not Found',

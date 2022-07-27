@@ -8,7 +8,13 @@ class CompanyInfoWidget extends StatelessWidget {
   final CompanyInfo companyInfo;
   @override
   Widget build(BuildContext context) {
-    return Text(
-        "${companyInfo.name} was founded by ${companyInfo.founder} in \n${companyInfo.founded}. It has now ${companyInfo.employees} employees,\n${companyInfo.launchSites} launch sites, and is valued at USD\n${companyInfo.valuation}");
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: Text(
+          "${companyInfo.name} was founded by ${companyInfo.founder} in \n${companyInfo.founded}. It has now ${companyInfo.employees} employees,\n${companyInfo.launchSites} launch sites, and is valued at USD\n${companyInfo.valuation}",
+        ),
+      ),
+    );
   }
 }
