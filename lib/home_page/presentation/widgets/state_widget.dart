@@ -12,6 +12,7 @@ class States extends InheritedWidget {
   }) : super(key: key, child: child);
 
   final Service service;
+  @override
   final Widget child;
   final usersNotifier = ValueNotifier(<LaunchInfo>[]);
   final darkThemeNotifier = ValueNotifier(true);
