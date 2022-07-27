@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spacex/theme/color_schemes.g.dart';
 
 import 'home_page/data/repository.dart';
 import 'home_page/presentation/pages/home_page.dart';
@@ -27,10 +28,12 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder(
       valueListenable: state,
       builder: ((context, bool value, child) {
-        var theme = value ? ThemeData.dark() : ThemeData.light();
+        print("foscas: ");
         return MaterialApp(
+          darkTheme: darkThemeData,
+          theme: lightThemeData,
+          themeMode: value ? ThemeMode.dark : ThemeMode.light,
           title: 'Flutter Demo',
-          theme: theme,
           home: const HomePage(),
         );
       }),

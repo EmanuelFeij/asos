@@ -35,26 +35,21 @@ class _HomePageState extends State<HomePage> {
               child: value
                   ? const Icon(
                       Icons.sunny,
-                      color: Colors.black,
                     )
                   : const Icon(
                       Icons.dark_mode,
-                      color: Colors.black,
                     ),
             ),
-            backgroundColor: Colors.grey[200],
             centerTitle: true,
-            title: const Text('SpaceX',
-                style: TextStyle(
-                  color: Colors.black,
-                )),
+            title: const Text(
+              'SpaceX',
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                     child: const Icon(
                       Icons.filter_alt,
-                      color: Colors.black,
                     ),
                     onTap: () {
                       showDialog(
