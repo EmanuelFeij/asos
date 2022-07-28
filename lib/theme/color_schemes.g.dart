@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-ThemeData lightThemeData = ThemeData(
+ThemeData lightThemeData = ThemeData.from(
   colorScheme: lightColorScheme,
 );
-ThemeData darkThemeData = ThemeData(
+ThemeData darkThemeData = ThemeData.from(
   colorScheme: darkColorScheme,
 );
 
@@ -25,7 +25,7 @@ const lightColorScheme = ColorScheme(
   errorContainer: Color(0xFFFFDAD6),
   onError: Color(0xFFFFFFFF),
   onErrorContainer: Color(0xFF410002),
-  background: Color(0xFFE5E7B9),
+  background: Color(0xFFFDFFD8),
   onBackground: Color(0xFF1C1C17),
   surface: Color(0xFFFDFFD8),
   onSurface: Color(0xFF1C1C17),
@@ -57,7 +57,7 @@ const darkColorScheme = ColorScheme(
   errorContainer: Color(0xFF93000A),
   onError: Color(0xFF690005),
   onErrorContainer: Color(0xFFFFDAD6),
-  background: Color(0xFF5F5F32),
+  background: Color(0xFF1C1C17),
   onBackground: Color(0xFFE5E2DA),
   surface: Color(0xFF1C1C17),
   onSurface: Color(0xFFE5E2DA),

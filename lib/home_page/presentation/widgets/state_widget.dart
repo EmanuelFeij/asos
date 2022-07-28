@@ -12,11 +12,12 @@ class States extends InheritedWidget {
   }) : super(key: key, child: child);
 
   final Service service;
+  @override
   final Widget child;
   final usersNotifier = ValueNotifier(<LaunchInfo>[]);
   final darkThemeNotifier = ValueNotifier(true);
   final paginationNotifier = ValueNotifier<Pagination>(Pagination(
-      limit: 20,
+      limit: 10,
       offset: 0,
       sortOrder: SortOrder.asc,
       launchSuccessful: LaunchSuccessful.both,
@@ -28,12 +29,13 @@ class States extends InheritedWidget {
 
   @override
   bool updateShouldNotify(States oldWidget) {
-    return darkThemeNotifier.value != oldWidget.darkThemeNotifier.value ||
+    return (darkThemeNotifier.value != oldWidget.darkThemeNotifier.value) ||
         (paginationNotifier.value.limit !=
                 oldWidget.paginationNotifier.value.limit ||
             paginationNotifier.value.offset !=
                 oldWidget.paginationNotifier.value.offset ||
             paginationNotifier.value.sortOrder !=
-                oldWidget.paginationNotifier.value.sortOrder);
+                oldWidget.paginationNotifier.value.sortOrder) ||
+        usersNotifier.value != oldWidget.usersNotifier.value;
   }
 }

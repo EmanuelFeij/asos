@@ -17,7 +17,6 @@ class LaunchInfoWidget extends StatelessWidget {
         child: Center(
           child: Text(
             'Image Not Found',
-            style: TextStyle(overflow: TextOverflow.clip),
           ),
         ),
       );
@@ -35,7 +34,6 @@ class LaunchInfoWidget extends StatelessWidget {
               Text(launchInfo.missionName),
               Text(launchInfo.launchYear),
               Text('${launchInfo.rocketName}/${launchInfo.rocketType}'),
-              // Text('${launchInfo.}'),
             ],
           ),
         ),

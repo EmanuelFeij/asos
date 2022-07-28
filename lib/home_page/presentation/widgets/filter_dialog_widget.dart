@@ -10,9 +10,10 @@ class FilterDialogWidget extends StatefulWidget {
 }
 
 class _FilterDialogWidgetState extends State<FilterDialogWidget> {
-  final yearTextController = TextEditingController();
+  int yearTextController = 2006;
   var wasSuccessful = LaunchSuccessful.both;
   var sortBy = SortOrder.asc;
+  DateTime selectedDate = DateTime(2006);
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +21,45 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
     final mQuery = MediaQuery.of(context);
     return Dialog(
       child: SizedBox(
-        height: mQuery.size.height * 0.3,
+        height: mQuery.size.height * 0.5,
         width: mQuery.size.width,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               // byLaunch year,
-              TextField(
-                keyboardType: TextInputType.number,
-                controller: yearTextController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  label: Text('Year'),
-                ),
-              ),
+              SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: GridView.count(
+                    crossAxisCount: 4,
+                    children: List.generate(15, (index) {
+                      final newYear = index + 2006;
+                      return GestureDetector(
+                        child: newYear == yearTextController
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$newYear',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              )
+                            : Center(
+                                child: Text('$newYear'),
+                              ),
+                        onTap: () {
+                          setState(() {
+                            yearTextController = newYear;
+                          });
+                        },
+                      );
+                    }),
+                  )),
               // sucessfully
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,9 +130,7 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
                   onPressed: () {
                     states!.value = Pagination(
                       launchSuccessful: wasSuccessful,
-                      year: yearTextController.text.isEmpty
-                          ? 0
-                          : int.parse(yearTextController.text),
+                      year: yearTextController,
                       limit: 20,
                       offset: 0,
                       sortOrder: sortBy,
