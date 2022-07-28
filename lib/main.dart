@@ -10,11 +10,11 @@ void main() {
   RepositoryImpl repo = RepositoryImpl();
   Service service = Service(repo: repo);
 
-  runApp(States(child: MyApp(), service: service));
+  runApp(States(child: const MyApp(), service: service));
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
