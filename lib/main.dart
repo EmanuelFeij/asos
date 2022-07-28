@@ -28,11 +28,8 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder(
       valueListenable: state,
       builder: ((context, bool value, child) {
-        print("foscas: ");
         return MaterialApp(
-          darkTheme: darkThemeData,
-          theme: lightThemeData,
-          themeMode: value ? ThemeMode.dark : ThemeMode.light,
+          theme: value ? lightThemeData : darkThemeData,
           title: 'Flutter Demo',
           home: const HomePage(),
         );

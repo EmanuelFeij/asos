@@ -26,17 +26,15 @@ class _ListBuilderState extends State<ListBuilder> {
   bool isItDone = false;
 
   _getMoreData(States states) async {
-    if (states.paginationNotifier.value.offset == 0) {
-      _scrollToTop();
-    }
+    gettingData = true;
 
-    if (isItDone && states.paginationNotifier.value.offset != 0) {
+    if (states.paginationNotifier.value.offset == 0 &&
+        states.usersNotifier.value.isNotEmpty) {
+      _scrollToTop();
       isItDone = false;
     }
-    gettingData = true;
     final moreData =
         await widget.service.getLaunches(states.paginationNotifier.value);
-    print("moredata ${moreData.length}");
     if (moreData.isEmpty) {
       if (states.paginationNotifier.value.offset == 0) {
         states.usersNotifier.value = <LaunchInfo>[];
@@ -50,6 +48,7 @@ class _ListBuilderState extends State<ListBuilder> {
     } else {
       states.usersNotifier.value = [...states.usersNotifier.value, ...moreData];
     }
+
     gettingData = false;
   }
 
@@ -73,7 +72,7 @@ class _ListBuilderState extends State<ListBuilder> {
       _getMoreData(state);
     });
     state.paginationNotifier.value = Pagination(
-        limit: 20,
+        limit: 10,
         offset: 0,
         sortOrder: SortOrder.asc,
         launchSuccessful: LaunchSuccessful.both,
@@ -81,7 +80,6 @@ class _ListBuilderState extends State<ListBuilder> {
   }
 
   void _scrollToTop() {
-    print("scrool me");
     _scrollController.animateTo(0,
         duration: const Duration(seconds: 1), curve: Curves.linear);
   }
@@ -104,12 +102,9 @@ class _ListBuilderState extends State<ListBuilder> {
                   controller: _scrollController,
                   itemCount: launchInfos.length,
                   itemBuilder: (context, index) {
-                    print(
-                        '$index, ${launchInfos.length}, $gettingData, $isItDone, ${state.paginationNotifier.value.offset}');
                     if (index == launchInfos.length - 5 &&
                         !gettingData &&
                         !isItDone) {
-                      print("asking more shit");
                       var pagination = state.paginationNotifier.value;
                       state.paginationNotifier.value = Pagination(
                         sortOrder: pagination.sortOrder,
@@ -168,13 +163,8 @@ class _ListBuilderState extends State<ListBuilder> {
                           );
                         },
                         child: Container(
-                          margin: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(8),
                           padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                              color: Color(0xFF5B6400),
-                              shape: BoxShape.rectangle,
-                              borderRadius:
-                                  BorderRadius.all(Radius.elliptical(10, 10))),
                           child:
                               LaunchInfoWidget(launchInfo: launchInfos[index]),
                         ));

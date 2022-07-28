@@ -31,7 +31,6 @@ class RepositoryImpl implements Repository {
       args['launch_year'] = p.year.toString();
     }
     var url = Uri.https(urlSpaceX, '/v3/launches', args);
-    print(url);
     var response = await http.get(url);
 
     return (response.statusCode == 200)

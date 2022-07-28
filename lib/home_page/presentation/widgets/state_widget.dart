@@ -16,7 +16,7 @@ class States extends InheritedWidget {
   final usersNotifier = ValueNotifier(<LaunchInfo>[]);
   final darkThemeNotifier = ValueNotifier(true);
   final paginationNotifier = ValueNotifier<Pagination>(Pagination(
-      limit: 20,
+      limit: 10,
       offset: 0,
       sortOrder: SortOrder.asc,
       launchSuccessful: LaunchSuccessful.both,

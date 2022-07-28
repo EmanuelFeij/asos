@@ -17,7 +17,6 @@ class LaunchInfoWidget extends StatelessWidget {
         child: Center(
           child: Text(
             'Image Not Found',
-            style: TextStyle(overflow: TextOverflow.clip, color: Colors.white),
           ),
         ),
       );
@@ -31,22 +30,17 @@ class LaunchInfoWidget extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              Text('${launchInfo.flightNumber}',
-                  style: const TextStyle(color: Colors.white)),
-              Text(launchInfo.missionName,
-                  style: const TextStyle(color: Colors.white)),
-              Text(launchInfo.launchYear,
-                  style: const TextStyle(color: Colors.white)),
-              Text('${launchInfo.rocketName}/${launchInfo.rocketType}',
-                  style: const TextStyle(color: Colors.white)),
-              // Text('${launchInfo.}'),
+              Text('${launchInfo.flightNumber}'),
+              Text(launchInfo.missionName),
+              Text(launchInfo.launchYear),
+              Text('${launchInfo.rocketName}/${launchInfo.rocketType}'),
             ],
           ),
         ),
         // checkmark
         launchInfo.launchSuccess
-            ? const Icon(Icons.check, color: Colors.white)
-            : const Icon(Icons.close, color: Colors.white)
+            ? const Icon(Icons.check)
+            : const Icon(Icons.close)
       ],
     );
   }
