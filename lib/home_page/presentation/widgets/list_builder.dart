@@ -135,9 +135,10 @@ class _ListBuilderState extends State<ListBuilder> {
                                       },
                                       child: const Image(
                                         image: AssetImage(
-                                            'assets/youtube_logo.jpg'),
-                                        width: 85,
+                                            'assets/youtube_logo.png'),
+                                        width: 100,
                                         height: 85,
+                                        filterQuality: FilterQuality.high,
                                       ),
                                     ),
                                     GestureDetector(
@@ -164,7 +165,7 @@ class _ListBuilderState extends State<ListBuilder> {
                         },
                         child: Container(
                           margin: const EdgeInsets.all(8),
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(16.0),
                           child:
                               LaunchInfoWidget(launchInfo: launchInfos[index]),
                         ));

@@ -33,8 +33,11 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
                   height: 200,
                   child: GridView.count(
                     crossAxisCount: 4,
-                    children: List.generate(15, (index) {
-                      final newYear = index + 2006;
+                    children: List.generate(16, (index) {
+                      var newYear =
+                          (index + 2006) == 2021 ? 'Any' : '${index + 2006}';
+                      ;
+
                       return GestureDetector(
                         child: newYear == yearTextController
                             ? Container(
@@ -44,17 +47,18 @@ class _FilterDialogWidgetState extends State<FilterDialogWidget> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '$newYear',
+                                    newYear,
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
                               )
                             : Center(
-                                child: Text('$newYear'),
+                                child: Text(newYear),
                               ),
                         onTap: () {
                           setState(() {
-                            yearTextController = newYear;
+                            yearTextController =
+                                newYear != 'Any' ? int.parse(newYear) : 0;
                           });
                         },
                       );
